@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_installed:
+  - docker build -t enrui/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true enrui/react-test npm test
+
+after_success:
+  - docker build -t enrui/multi-client ./client
+  - docker build -t enrui/multi-nginx ./nginx .
+  - docker build -t enrui/multi-server ./server
+  - docker build -t enrui/multi-worker ./worker
