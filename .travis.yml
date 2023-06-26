@@ -13,3 +13,8 @@ after_success:
   - docker build -t enrui/multi-nginx ./nginx
   - docker build -t enrui/multi-server ./server
   - docker build -t enrui/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push enrui/multi-client
+  - docker push enrui/multi-nginx
+  - docker push enrui/multi-server
+  - docker push enrui/multi-worker
